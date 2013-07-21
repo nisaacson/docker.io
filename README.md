@@ -223,4 +223,27 @@ function handler(err, res) {
 docker.info(handler);
 ```
 
+
 Other methods are implamented but a little buggy... PULL REQUESTS ARE WELCOME!
+
+# Tests
+
+To run the test suite you will need the following
+
+* the docker daemon installed and running
+* a long running process inside a ubuntu container
+
+To simplify testing you can use the included Vagrantfile to setup a testing environment. To start the VM you will need [vagrant](https://vagrantup.com) installed on your machine
+
+
+```bash
+vagrant up
+vagrant ssh
+# start a long running process using the Ubuntu container in detached mode
+docker run -d ubuntu tail -f /var/log/boot
+# cd to the project root directory which is mounted on the VM at /vagrant
+cd /vagrant
+# install the development dependencies
+npm install
+npm test
+```

@@ -1,5 +1,6 @@
 var docker = require('./lib')({
-  host: 'http://localhost'
+  host: 'http://localhost',
+  version: '1.3'
 });
 var expect = require('chai').expect;
 var someContainerID = '';
