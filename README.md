@@ -3,6 +3,8 @@ docker.io
 
 Node.JS wrapper for low-level Docker.io HTTP interface
 
+[![Build Status](https://travis-ci.org/nisaacson/docker.io.png)](https://travis-ci.org/nisaacson/docker.io)
+
 ## Usage
 
 ```javascript

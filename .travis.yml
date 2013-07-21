@@ -1,3 +1,8 @@
+language: node_js
+node_js:
+  - "0.10"
+  - "0.8"
+
 before_script:
   - sudo apt-get update
   - sudo apt-get install -y python-software-properties
@@ -6,8 +11,3 @@ before_script:
   - sudo apt-get install -y lxc-docker
   - docker pull ubuntu
   - docker run -d -t ubuntu tail -f /var/log/boot
-
-language: node_js
-node_js:
-  - "0.10"
-  - "0.8"
