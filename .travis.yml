@@ -6,7 +6,7 @@ node_js:
 before_script:
   - sudo apt-get update -qq
   - sudo apt-get install -qq python-software-properties
-  - sudo add-apt-repository -qq ppa:dotcloud/lxc-docker
+  - sudo add-apt-repository ppa:dotcloud/lxc-docker
   - sudo apt-get update -qq
   - sudo apt-get install -qq lxc-docker
   - docker pull ubuntu
