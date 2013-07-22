@@ -19,7 +19,7 @@
 ################################################################################
 #!/bin/bash
 sudo apt-get update
-cat <<EOF | tee /usr/sbin/policy-rc.d
+cat <<EOF | sudo tee /usr/sbin/policy-rc.d
 #!/bin/sh
 exit 101
 EOF
