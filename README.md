@@ -224,7 +224,87 @@ docker.info(handler);
 ```
 
 
-Other methods are implamented but a little buggy... PULL REQUESTS ARE WELCOME!
+Other methods are implemented but a little buggy... PULL REQUESTS ARE WELCOME!
+
+# Images
+
+So far the `list` and `create` methods are supported for images.
+
+ - list
+
+```javascript
+function handler(err, images) {
+  if (err) {
+    throw err
+  }
+  console.log("images data returned from Docker as JS object: ", images);
+}
+var opts = {}
+docker.images.list(opts, handler)
+```
+
+The `images` object in the example above should look something like the following assuming that the `ubuntu` image is installed
+
+```javascript
+[
+  {
+    Repository: 'ubuntu',
+    Tag: '12.04',
+    Id: '8dbd9e392a964056420e5d58ca5cc376ef18e2de93b5cc90e868a1bbc8318c1c',
+    Created: 1365714795,
+    Size: 131502179,
+    VirtualSize: 131502179
+  },
+  {
+    Repository: 'ubuntu',
+    Tag: '12.10',
+    Id: 'b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc',
+    Created: 1364102658,
+    Size: 24653,
+    VirtualSize: 180116135
+  },
+  {
+    Repository: 'ubuntu',
+    Tag: 'latest',
+    Id: '8dbd9e392a964056420e5d58ca5cc376ef18e2de93b5cc90e868a1bbc8318c1c',
+    Created: 1365714795,
+    Size: 131502179,
+    VirtualSize: 131502179
+  }
+  // maybe more images here
+]
+```
+ - create
+
+Currently the module on supports creating an image by pulling down from the public docker repository. Since the creation happens over several steps, the
+Docker api sends back streaming results. You can optionally pass in a second final callback which is called when Docker completes the image creation
+
+```javascript
+
+// incrementally log the streaming response from the docker api.
+// This function will most likely be called more than once
+function streamingResponseHandler(err, images) {
+  if (err) {
+    throw err
+  }
+  console.log("images data returned from Docker as JS object: ", images);
+}
+
+// only called after the image creation is complete
+function completeHandler(err) {
+  if (err) {
+    throw err
+  }
+  console.log('image created successfully')
+}
+
+var opts = {
+  fromImage: 'ubuntu' // the fromImage field is a required option here
+}
+// note that unlike other examples we pass 2 callbacks here
+docker.images.create(opts, streamingResponseHandler, completeHandler)
+```
+
 
 # Tests
 

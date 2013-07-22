@@ -5,7 +5,6 @@ var docker = require('./lib')({
 var expect = require('chai').expect;
 var someContainerID = '';
 
-
 describe("docker.io", function() {
 
   describe("#containers", function() {
@@ -58,7 +57,10 @@ describe("docker.io", function() {
           done();
         }
 
-        docker.containers.attach(someContainerID, {stream: true, stdout: true}, handler);
+        docker.containers.attach(someContainerID, {
+          stream: true,
+          stdout: true
+        }, handler);
       });
     });
 
@@ -184,6 +186,73 @@ describe("docker.io", function() {
     });
 
   });
+
+  describe("#images", function() {
+
+    describe("#list", function() {
+
+      it("should list all images", function(done) {
+        this.timeout(50000);
+
+        function handler(err, res) {
+          expect(err).to.be.null;
+          if (res.length === 0) {
+            console.log('Tests are about to fail because there are no images... pull the "ubuntu" image first to pass all tests... this container should be a ubuntu container...');
+          }
+          expect(res.length).to.be.above(0, 'no images found')
+          done();
+        }
+
+        docker.images.list({}, handler);
+      });
+    });
+
+    describe("#create", function() {
+
+      it("should create an image by pulling from remote repository", function(done) {
+        this.timeout('50s');
+        this.slow('5s')
+        var pullingResponseReceived = false
+        var image = 'base'
+        var pullingPattern = new RegExp('Pulling repository ' + image)
+        function handler(err, res) {
+          expect(err).to.be.null;
+          if (res && res.status) {
+            if (pullingPattern.test(res.status)) {
+              pullingResponseReceived = true
+            }
+          }
+        }
+
+        function finalCB() {
+          expect(pullingResponseReceived).to.be.true
+          done()
+        }
+        docker.images.create({
+          fromImage: image
+        }, handler, finalCB);
+      });
+
+      it("should return error when trying to create/pull an image that does not exist", function(done) {
+        this.timeout(50000);
+        this.slow('2s')
+        function handler(err, res) {
+          if (err) {
+            return done()
+          }
+        }
+
+        function finalCB() {
+          expect(false)
+        }
+        docker.images.create({
+          fromImage: 'nonExistantImage'
+        }, handler, finalCB);
+      });
+
+    });
+
+  })
 
   describe("#runExport", function() {
 
