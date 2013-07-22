@@ -1,6 +1,6 @@
 before_script:
  - sudo apt-get update
- - sudo apt-get -y install lxc curl xz-utils golang git
+ - sudo apt-get -y install curl xz-utils golang git
  - export GOPATH=~/go/
  - export PATH=$GOPATH/bin:$PATH
  - mkdir -p $GOPATH/src/github.com/dotcloud
