@@ -1,4 +1,5 @@
 before_script:
+ - bin/install-lxc.sh
  - sudo apt-get update
  - sudo apt-get -y install curl xz-utils golang git
  - export GOPATH=~/go/
