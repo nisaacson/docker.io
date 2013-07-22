@@ -1,12 +1,6 @@
 before_script:
  - bin/install-lxc.sh
- - sudo apt-get update
- - sudo apt-get -y install curl xz-utils golang git
- - export GOPATH=~/go/
- - export PATH=$GOPATH/bin:$PATH
- - mkdir -p $GOPATH/src/github.com/dotcloud
- - cd $GOPATH/src/github.com/dotcloud && git clone https://github.com/dotcloud/docker.git && cd docker && go get -v github.com/dotcloud/docker/... && go install -v github.com/dotcloud/docker/...
- - sudo $GOPATH/bin/docker -d
+ - bin/install-docker.sh
 language: node_js
 node_js:
   - "0.10"
