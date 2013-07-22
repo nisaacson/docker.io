@@ -1,11 +1,10 @@
 before_script:
-  - sudo apt-get update
-  - sudo apt-get install -y python-software-properties
-  - sudo add-apt-repository ppa:dotcloud/lxc-docker
-  - sudo apt-get update
-  - sudo apt-get install -y lxc-docker
-  - docker pull ubuntu
-  - docker run -d -t ubuntu tail -f /var/log/boot
+ - sudo apt-get update
+ - sudo apt-get -y install lxc curl xz-utils golang git
+ - export GOPATH=~/go/
+ - export PATH=$GOPATH/bin:$PATH
+ - mkdir -p $GOPATH/src/github.com/dotcloud
+ - cd $GOPATH/src/github.com/dotcloud && git clone https://github.com/dotcloud/docker.git && cd docker && go get -v github.com/dotcloud/docker/... && go install -v github.com/dotcloud/docker/...
 
 language: node_js
 node_js:
