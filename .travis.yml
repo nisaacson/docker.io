@@ -1,5 +1,4 @@
 before_script:
- - bin/install-lxc.sh
  - bin/install-docker.sh
  - bin/start-long-running-docker-process.sh
 language: node_js
